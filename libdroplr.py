@@ -16,11 +16,13 @@ import urllib
 import simplejson as json
 import mimetypes
 import ConfigParser
+import pkg_resources
 
 class Droplr:
 	def __init__(self):
 		config = ConfigParser.ConfigParser()
-		config.read('config.cfg')
+		config_file = pkg_resources.resource_stream(__name__, 'config.cfg')
+		config.readfp(config_file)
 
 		self._public_key = config.get('NetworkSettings', 'PublicKey')
 		self._private_key = config.get('NetworkSettings', 'PrivateKey')

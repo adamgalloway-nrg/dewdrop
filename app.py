@@ -10,10 +10,11 @@ from version import new_version
 import gtk
 import sys
 import os
+import pkg_resources
 
 class App:
 	def __init__(self):
-		if not os.path.exists('config.cfg'):
+		if not pkg_resources.resource_exists(__name__, 'config.cfg'):
 			print 'Config file (config.cfg) is missing'
 			# import ConfigParser
 			# config = ConfigParser.ConfigParser()
@@ -26,7 +27,7 @@ class App:
 			# file = open('config.cfg', 'w')
 			# config.write(file)
 			# file.close()
-			# sys.exit(1)
+			sys.exit(1)
 
 		self._cfg = Config()
 
