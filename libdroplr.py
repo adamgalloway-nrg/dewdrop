@@ -15,14 +15,24 @@ import base64
 import urllib
 import simplejson as json
 import mimetypes
+import ConfigParser
 
 class Droplr:
 	def __init__(self):
-		self._public_key = '<public key here>'
-		self._private_key = '<private key here>'
-		self.server = '<server name here>'
-		self.port = 8069
-		self.scheme = 'http'
+		config = ConfigParser.ConfigParser()
+
+		if os.path.exists('config.cfg'):
+			config.read('config.cfg')
+		else:
+			print 'Config file (config.cfg) is missing'
+			gtk.main_quit()
+			sys.exit(1)
+
+		self._public_key = config.get('NetworkSettings', 'PublicKey')
+		self._private_key = config.get('NetworkSettings', 'PrivateKey')
+		self.server = config.get('NetworkSettings', 'Server')
+		self.port = config.getint('NetworkSettings', 'Port')
+		self.scheme = config.get('NetworkSettings', 'Scheme')
 
 		self._version = '0.3'
 
@@ -76,7 +86,8 @@ class Droplr:
 		data = f.read()
 		f.close()
 
-		request = self.create_request('POST', '/files', {'filename': base64.b64encode(os.path.basename(filename))}, content_type, data)
+		#request = self.create_request('POST', '/files', {'filename': base64.b64encode(os.path.basename(filename))}, content_type, data)
+		request = self.create_request('POST', '/files', {'filename': os.path.basename(filename)}, content_type, data)
 		request.headers['Content-Length'] = len(data)
 		request = self.sign_request(request)
 		return request.execute()

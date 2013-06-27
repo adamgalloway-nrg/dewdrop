@@ -30,7 +30,8 @@ class App:
 		self._cfg.set('passhash', None)
 		self._cfg.save()
 
-		delattr(self, 'dew')
+		if hasattr(self, 'dew'):
+			delattr(self, 'dew')
 		self.show_login()
 
 	def show_login(self):
