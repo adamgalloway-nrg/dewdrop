@@ -8,9 +8,26 @@ from dapi import DAPI
 from dewdrop import DewDrop
 from version import new_version
 import gtk
+import sys
+import os
 
 class App:
 	def __init__(self):
+		if not os.path.exists('config.cfg'):
+			print 'Config file (config.cfg) is missing'
+			# import ConfigParser
+			# config = ConfigParser.ConfigParser()
+			# config.add_section('NetworkSettings')
+			# config.set('NetworkSettings', 'PublicKey', '<Enter Public Key>')
+			# config.set('NetworkSettings', 'PrivateKey', '<Enter Private Key>')
+			# config.set('NetworkSettings', 'Server', 'sandbox.droplr.com')
+			# config.set('NetworkSettings', 'Port', '8069')
+			# config.set('NetworkSettings', 'Scheme', 'http')
+			# file = open('config.cfg', 'w')
+			# config.write(file)
+			# file.close()
+			# sys.exit(1)
+
 		self._cfg = Config()
 
 		new_version()

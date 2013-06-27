@@ -20,13 +20,7 @@ import ConfigParser
 class Droplr:
 	def __init__(self):
 		config = ConfigParser.ConfigParser()
-
-		if os.path.exists('config.cfg'):
-			config.read('config.cfg')
-		else:
-			print 'Config file (config.cfg) is missing'
-			gtk.main_quit()
-			sys.exit(1)
+		config.read('config.cfg')
 
 		self._public_key = config.get('NetworkSettings', 'PublicKey')
 		self._private_key = config.get('NetworkSettings', 'PrivateKey')
